@@ -1,0 +1,25 @@
+
+.ani-1 {
+        background-color: black;
+        color: white;
+        padding: 7px 18px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease; /* Smooth animation */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        position: relative;
+        }
+        /* Hover Effect */
+.ani-1:hover {
+        background-color: darkblue; /* Slightly darker green */
+        transform: scale(1.05); /* Slight zoom */
+        box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+.logoutline{
+    margin-top: 20px;
+    font-weight: 500;
+}

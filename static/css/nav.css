@@ -1,0 +1,65 @@
+.navfont{
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+
+/* CSS for Animated Dropdown */
+    .dropdown-menu {
+      display: none;
+      opacity: 0; /* Start invisible for animation */
+      transform: translateY(-10px); /* Slide effect */
+      transition: opacity 0.3s ease, transform 0.3s ease;
+
+    }
+
+    .dropdown:hover .dropdown-menu {
+      /* display: block; */
+      opacity: 3; /* Make it visible */
+      transform: translateY(0); /* Slide down effect */
+    }
+
+    .dropdown-menu a.dropdown-item {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .dropdown-menu a.dropdown-item:hover {
+      background-color: #f3af31; /* Highlight color */
+      transform: scale(1.05); /* Slight scaling effect on hover */
+    }
+
+    /* Optional: Style the dropdown toggle button */
+    .nav-link.dropdown-toggle {
+      transition: color 0.3s ease;
+    }
+
+    .nav-link.dropdown-toggle:hover {
+      color: #f39c12; /* Change color on hover */
+    }
+
+
+    .footer1{
+      position: relative;
+      bottom: 0%;
+      width: 100%;
+    }
+
+ /* Custom carousel styles */
+ .custom-carousel {
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 5px rgb(18, 16, 19);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  /* Hover effect */
+  .custom-carousel:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 0px 10px 5px rgba(162, 9, 9, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 20px;
+  }

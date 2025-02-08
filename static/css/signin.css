@@ -1,0 +1,73 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background-image: url('/static/img/gj.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white; /* Text color for better contrast on background */
+  font-family: Arial, sans-serif;
+}
+/* .bd{
+  background: url("/static/img/gj.webp");
+  background-size: cover;
+  background-size: 100% 100%; */
+  /* background-repeat: no-repeat; Prevents the image from repeating */
+  /* background-attachment: fixed;  Keeps the background fixed while scrolling 
+  font-family: Arial, sans-serif;
+} */
+.transparent-form{
+      max-width: 500px;
+      font-weight: bold;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgba(245, 215, 149, 0.8);
+      border-radius: 10px;
+      box-shadow: 10px 10px 20px 20px rgba(0, 0, 0, 0.1);
+      margin-top: 5em;
+      
+}  
+
+.ani-1 {
+  background-color: black;
+  color: white;
+  padding: 7px 18px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth animation */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  position: relative;
+}
+/* Hover Effect */
+.ani-1:hover {
+  background-color: darkblue; /* Slightly darker green */
+  transform: scale(1.05); /* Slight zoom */
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+}
+
+.message-box {
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 15px;
+  align-items: center;
+  margin-right: 30px;
+ }
+
+
+/* Success Message */
+.success {
+  background-color: #131106;
+  color: rgb(250, 254, 39);
+  text-align: center;
+} 
+.login-link{
+  text-decoration: none;
+  margin-top: 10px;
+  /* font-weight: 700; */
+}
