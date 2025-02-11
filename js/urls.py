@@ -36,7 +36,7 @@ urlpatterns = [
     path('tour/',views.tour,name='tour'),
     path('viewtour/',views.viewtour,name='viewtour'),
     path('book/',views.book,name='book'),
-    path('book/delete/<int:tour_id>/', views.delete_tour, name='delete_tour'),
+    path('tour/delete/<int:tour_id>/', views.delete_tour, name='delete_tour'),
     path('tour/update/<int:tour_id>/',views.update_tour, name='update_tour'),
 ]
 

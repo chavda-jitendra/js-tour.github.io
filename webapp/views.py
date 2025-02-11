@@ -149,8 +149,13 @@ def viewtour(request):
 @login_required(login_url='/login/')
 def book(request):
     # return render(request,'book.html')
-    tours = Tour.objects.all()
-    return render(request, 'book.html', {'tours': tours})
+    # tour = Tour.objects.all().values('title')
+    # return render(request, 'book.html', {'tours': tours})
+    title = request.GET.get('title')  # Extract title from query parameter
+    tour = Tour.objects.filter(title=title).first() if title else None
+
+    context = {'tour': tour}
+    return render(request, 'book.html', context)
 
 
 

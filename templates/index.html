@@ -136,7 +136,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ tour.title }}</h5>
                 <p class="card-text">{{ tour.description }}</p>
-                <a href="{% if user.is_authenticated %}{% url 'book' %}{% else %}{% url 'login' %}{% endif %}"
+                <a href="{% if user.is_authenticated %}{% url 'book' %}?title={{ tour.title }}{% else %}{% url 'login' %}{% endif %}"
                   class="btn btn-warning text-lg-center fw-bold text-dark" onclick="handleBooking()">
                   Book Now
                 </a>

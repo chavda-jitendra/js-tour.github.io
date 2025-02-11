@@ -110,7 +110,7 @@
                 {% if tour.image %}
             <img src="{{ tour.image.url }}" alt="{{ tour.title }}" width="200"> <!-- Display Image -->
             {% else %}
-            No Image
+            {% comment %} No Image {% endcomment %}
             {% endif %}
     
                 <div class="mb-3">
