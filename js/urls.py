@@ -35,9 +35,15 @@ urlpatterns = [
     path('feedback/delete/<int:pk>/', views.delete_feedback, name='delete_feedback'),
     path('tour/',views.tour,name='tour'),
     path('viewtour/',views.viewtour,name='viewtour'),
-    path('book/',views.book,name='book'),
+    path('book/',views.book,name='book'),   
     path('tour/delete/<int:tour_id>/', views.delete_tour, name='delete_tour'),
     path('tour/update/<int:tour_id>/',views.update_tour, name='update_tour'),
+    # path('allbooklist/',views.allbooklist, name='allbooklist'),
+    # path('allbooklist/delete/<int:booking_id>/', views.delete_book, name='delete_book'),
+    path('allbooklist/',views.allbooklist, name='allbooklist'),  # Updated view function name
+    path('delete/<int:booking_id>/', views.delete_booking, name='delete_booking'),
+    path('update-booking/<int:booking_id>/', views.update_booking, name='update_booking'),
+    
 ]
 
 # Serve media files during development

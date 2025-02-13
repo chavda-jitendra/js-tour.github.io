@@ -59,7 +59,7 @@
   /* Hover effect */
   .custom-carousel:hover {
     transform: scale(1.02);
-    box-shadow: 5px 5px 15px 10px rgba(45, 221, 165, 0.2);
+    box-shadow: 5px 5px 15px 5px rgba(45, 221, 165, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 20px;
   }

@@ -10,7 +10,8 @@ from .models import Feedback
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Tour
 from .forms import TourForm
-
+from .models import TourBooking
+from .forms import TourBookingForm  # Assuming you have a form for the model
 
 
 def coursedetails(request,courseid):
@@ -23,6 +24,8 @@ def homepage(request):
 
 def about(request):
     return render(request,'about.html')
+
+
 
 def contact(request):
     if request.method == "POST":
@@ -146,16 +149,108 @@ def viewtour(request):
     return render(request, 'viewtour.html', {'tours': tours})
 
 
-@login_required(login_url='/login/')
-def book(request):
-    # return render(request,'book.html')
-    # tour = Tour.objects.all().values('title')
-    # return render(request, 'book.html', {'tours': tours})
-    title = request.GET.get('title')  # Extract title from query parameter
+
+# @login_required(login_url='/login/')
+# def book(request):
+#     # return render(request,'book.html')
+#     # tour = Tour.objects.all().values('title')
+#     # return render(request, 'book.html', {'tours': tours})     
+#     title = request.GET.get('title')  # Extract title from query parameter
+#     tour = Tour.objects.filter(title=title).first() if title else None
+#     context = {'tour': tour}
+#     tourbooking = None  # Fetch tourbooking if it exists, e.g., if you're updating a booking
+    
+#     if request.method == "POST":      # Check if the form has been submitted book.html
+#         fullname = request.POST.get("fullname")
+#         email = request.POST.get("email")
+#         phonenumber = request.POST.get("phonenumber")
+#         selected_tour = request.POST.get("selected_tour")
+#         preferred_travel_date = request.POST.get("preferred_travel_date")
+#         number_of_travelers = request.POST.get("number_of_travelers")
+#         special_requests = request.POST.get("special_requests", "")
+
+#         # Check if required fields are present
+#         if fullname and email and phonenumber and selected_tour and preferred_travel_date and number_of_travelers:
+#             # Save the data into the database
+#             TourBooking.objects.create(
+#                 fullname=fullname,
+#                 email=email,
+#                 phonenumber=phonenumber,
+#                 selected_tour=selected_tour,
+#                 preferred_travel_date=preferred_travel_date,
+#                 number_of_travelers=number_of_travelers,
+#                 special_requests=special_requests
+#             )
+#     context = {'tour': tour, 'tourbooking': tourbooking}
+#     return render(request, 'book.html', context)
+
+
+
+def book(request, booking_id=None):
+    if booking_id:
+        tourbooking = get_object_or_404(TourBooking, id=booking_id)
+    else:
+        tourbooking = None
+
+    title = request.GET.get('title')
     tour = Tour.objects.filter(title=title).first() if title else None
 
-    context = {'tour': tour}
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        phonenumber = request.POST.get("phonenumber")
+        selected_tour = request.POST.get("selected_tour")
+        preferred_travel_date = request.POST.get("preferred_travel_date")
+        number_of_travelers = request.POST.get("number_of_travelers")
+        special_requests = request.POST.get("special_requests", "")
+
+        # Debugging: Print the values being posted
+        print("POST Data:", {
+            "fullname": fullname,
+            "email": email,
+            "phonenumber": phonenumber,
+            "selected_tour": selected_tour,
+            "preferred_travel_date": preferred_travel_date,
+            "number_of_travelers": number_of_travelers
+        })
+
+        # Check if fullname is present
+        if not fullname:
+            # Handle the error: return an error message or render the form with an error
+            return render(request, 'book.html', {
+                'tour': tour,
+                'tourbooking': tourbooking,
+                'error': "Fullname is required."
+            })
+
+        # Continue saving or updating the booking
+        if tourbooking:
+            tourbooking.fullname = fullname
+            tourbooking.email = email
+            tourbooking.phonenumber = phonenumber
+            tourbooking.selected_tour = selected_tour
+            tourbooking.preferred_travel_date = preferred_travel_date
+            tourbooking.number_of_travelers = number_of_travelers
+            tourbooking.special_requests = special_requests
+            tourbooking.save()
+        else:
+            TourBooking.objects.create(
+                fullname=fullname,
+                email=email,
+                phonenumber=phonenumber,
+                selected_tour=selected_tour,
+                preferred_travel_date=preferred_travel_date,
+                number_of_travelers=number_of_travelers,
+                special_requests=special_requests
+            )
+
+    context = {
+        'tour': tour,
+        'tourbooking': tourbooking
+    }
+    
     return render(request, 'book.html', context)
+
 
 
 
@@ -165,11 +260,8 @@ def delete_tour(request, tour_id):
     return redirect('viewtour')  # Redirect to the list page after deletion
 
 
-
-
 def update_tour(request, tour_id):
     tour = get_object_or_404(Tour, id=tour_id)  # Fetch the tour instance by ID
-
     if request.method == 'POST':
         form = TourForm(request.POST, request.FILES, instance=tour)  # Pass instance to the form
         if form.is_valid():
@@ -177,5 +269,35 @@ def update_tour(request, tour_id):
             return redirect('viewtour')  # Redirect after updating
     else:
         form = TourForm(instance=tour)  # Pre-populate form with tour data
-
     return render(request, 'tour.html', {'form': form, 'tour': tour})
+
+
+def allbooklist(request):
+    bookings = TourBooking.objects.all()  # Get all booking records
+    return render(request, "allbooklist.html", {"bookings": bookings})
+
+
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(TourBooking, id=booking_id)
+    booking.delete()  # Delete the selected booking
+    return redirect('allbooklist')  # Redirect back to the list of bookings after deletion
+
+
+def update_booking(request, booking_id):
+    # Retrieve the tour booking by its ID
+    tourbooking = get_object_or_404(TourBooking, id=booking_id)
+
+    if request.method == "POST":
+        form = TourBookingForm(request.POST, instance=tourbooking)
+        if form.is_valid():
+            form.save()
+            return redirect('allbooklist')  # Redirect to the list of bookings or wherever you prefer
+    else:
+        form = TourBookingForm(instance=tourbooking)
+
+    context = {
+        'form': form,
+        'tourbooking': tourbooking
+    }
+    
+    return render(request, 'book.html', context)

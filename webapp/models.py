@@ -16,3 +16,18 @@ class Tour(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TourBooking(models.Model):
+    fullname = models.CharField(max_length=255)
+    email = models.EmailField()
+    phonenumber = models.CharField(max_length=20)
+    selected_tour = models.CharField(max_length=255)
+    preferred_travel_date = models.DateField()
+    number_of_travelers = models.IntegerField()
+    special_requests = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+          return f'{self.fullname} - {self.selected_tour}'
+    
+

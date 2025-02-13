@@ -37,7 +37,11 @@
         <a class="nav-link active" href="{% url 'tour' %}">Careate tour</a>
       </li>
       {% endif %}
-
+      {% if request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'allbooklist' %}">View all booking list</a>
+      </li>
+      {% endif %}
       {% if request.user.is_authenticated %}
       <div class="d-flex align-items-center">
           <span class="welcome-text">Welcome, {{ user.username }}</span>
