@@ -17,13 +17,31 @@ from .forms import TourBookingForm  # Assuming you have a form for the model
 def coursedetails(request,courseid):
     return HttpResponse(courseid)
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def cbook(request):
+    # Get the logged-in user's email
+    user_email = request.user.email
+    
+    # Ensure the user is a normal user (not staff)
+    if not request.user.is_staff:
+        # Fetch bookings where the email matches the logged-in user's email
+        bookings = TourBooking.objects.filter(email=user_email)
+    else:
+        # Return an empty queryset if the user is staff
+        bookings = TourBooking.objects.none()
+
+    return render(request, "cbook.html", {"bookings": bookings})
+
+
 def homepage(request):
     tours = Tour.objects.all()
     return render(request, 'index.html', {'tours': tours})
     # return render(request,'index.html')
 
-def about(request):
-    return render(request,'about.html')
+def place(request):
+    return render(request,'place.html')
 
 
 
@@ -53,7 +71,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:    
             auth_login(request, user)  # Log in the user
-            return redirect('dashboard')  # Redirect to the dashboard
+            return redirect('homepage')  # Redirect to the indax
         else:
             # If authentication fails, send an error message
             messages.error(request, "Invalid username or password")
@@ -68,10 +86,10 @@ def dashboard(request):
         
         # Fetch all users excluding superusers
         users = User.objects.filter(is_superuser=False)
-        return render(request, 'dashboard.html', {'users': users})  # Render the dashboard with    
+        return render(request, 'index.html', {'users': users})  # Render the dashboard with    
      else:
         users = None  # Non-superusers won't see any data
-        return render(request, 'templates/dashboard.html', {'users': users})
+        return render(request, 'templates/index.html', {'users': users})
 
 def signin(request):
     if request.method == 'POST':
@@ -121,9 +139,6 @@ def delete_feedback(request, pk):
 
 
 
-def about(request):
-    return render(request,'about.html')
-
 @login_required(login_url='/login/')
 def tour(request):
     if request.method == 'POST':
@@ -147,43 +162,6 @@ def tour(request):
 def viewtour(request):
     tours = Tour.objects.all()
     return render(request, 'viewtour.html', {'tours': tours})
-
-
-
-# @login_required(login_url='/login/')
-# def book(request):
-#     # return render(request,'book.html')
-#     # tour = Tour.objects.all().values('title')
-#     # return render(request, 'book.html', {'tours': tours})     
-#     title = request.GET.get('title')  # Extract title from query parameter
-#     tour = Tour.objects.filter(title=title).first() if title else None
-#     context = {'tour': tour}
-#     tourbooking = None  # Fetch tourbooking if it exists, e.g., if you're updating a booking
-    
-#     if request.method == "POST":      # Check if the form has been submitted book.html
-#         fullname = request.POST.get("fullname")
-#         email = request.POST.get("email")
-#         phonenumber = request.POST.get("phonenumber")
-#         selected_tour = request.POST.get("selected_tour")
-#         preferred_travel_date = request.POST.get("preferred_travel_date")
-#         number_of_travelers = request.POST.get("number_of_travelers")
-#         special_requests = request.POST.get("special_requests", "")
-
-#         # Check if required fields are present
-#         if fullname and email and phonenumber and selected_tour and preferred_travel_date and number_of_travelers:
-#             # Save the data into the database
-#             TourBooking.objects.create(
-#                 fullname=fullname,
-#                 email=email,
-#                 phonenumber=phonenumber,
-#                 selected_tour=selected_tour,
-#                 preferred_travel_date=preferred_travel_date,
-#                 number_of_travelers=number_of_travelers,
-#                 special_requests=special_requests
-#             )
-#     context = {'tour': tour, 'tourbooking': tourbooking}
-#     return render(request, 'book.html', context)
-
 
 
 def book(request, booking_id=None):

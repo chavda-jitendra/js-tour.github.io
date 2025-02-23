@@ -1,4 +1,3 @@
-
 {% include 'header.html' %}
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,6 @@
             border: 1px solid #ddd;
             padding: 8px;
         }
-
         th {
             background-color: lightblue;
         }
@@ -35,6 +33,7 @@
             padding: 6px 12px;
             text-decoration: none;
             border-radius: 4px;
+            margin-top: 20px;
         }
         .update-btn{
             background-color: #d9a215;
@@ -44,44 +43,63 @@
             border-radius: 4px;
         }
     </style>
+
 </head>
 <body>
-    <hr>
-    <h1 style="text-align: center;"> All FEEDBACK</h1>
-    <hr>
-    <table>
+    {% comment %} {% csrf_token %} {% endcomment %}
+    <h2>All Bookings</h2>
+    
+    <table border="1">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Full Name</th>
                 <th>Email</th>
-                <th>Description</th>
-                <th colspan="2">Actions</th>
+                <th>Phone Number</th>
+                <th>Selected Tour</th>
+                <th>Preferred Travel Date</th>
+                <th>Number of Travelers</th>
+                <th>Special Requests</th>
+                <th colspan="2">action</th>
             </tr>
         </thead>
         <tbody>
-            {% for feedback in feedbacks %}
-            <tr>
-                <td>{{ feedback.id }}</td>
-                <td>{{ feedback.email }}</td>
-                <td>{{ feedback.description }}</td>
-                {% comment %} <td>
-                    <a href="#" class="update-btn">Update</a>
-                </td> {% endcomment %}
-                <!-- "Delete" button triggers the delete view -->
+            {% for booking in bookings %}
+                <tr>        
+                    <td>{{ booking.fullname }}</td>
+                    <td>{{ booking.email }}</td>
+                    <td>{{ booking.phonenumber }}</td>
+                    <td>{{ booking.selected_tour }}</td>
+                    <td>{{ booking.preferred_travel_date }}</td>
+                    <td>{{ booking.number_of_travelers }}</td>
+                    <td>{{ booking.special_requests }}</td> 
                 <td>
-                    <form action="{% url 'delete_feedback' feedback.id %}" method="POST">
+                    <form method="POST" action="{% url 'update_booking' booking.id %}" enctype="multipart/form-data">
+                     {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'delete_booking' booking.id %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</button>
                     </form>
                 </td>
             </tr>
             {% empty %}
-            <tr>
-                <td colspan="3">No feedbacks available.</td>
-            </tr>
+                <tr>
+                    <td colspan="7">No bookings available.</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
+    
+    
+    <div class="text-center mt-3">
+        <a href="{% url 'homepage' %}">Back to Tour Home</a>
+    </div>
+
+    <br>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     {% include 'footer.html' %}

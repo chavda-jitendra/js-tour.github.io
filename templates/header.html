@@ -1,3 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .header {
+      display: flex;
+      align-items: center;  /* Aligns logo and title vertically */
+      gap: 10px; /* Adds spacing between logo and title */
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+  }
+
+  .logo {
+      width: 120px; 
+      height: 120px;
+  }
+
+  .title {
+      font-size: 42px;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      color: #572c0f;
+  }
+  </style>
+</head>
+
+<body>
+  <link rel="icon" type="image/x-icon" href="/static/img/js2.png">
+<div class="header">
+  <img src="/static/img/js2.png" alt="Logo" class="logo">
+  <span class="title">JS TOURS & TRAVELS</span>
+</div>
+</body>
+</html>
+
+
 <nav class="navbar navbar-expand-lg bg-warning navfont">
   <div class="container-fluid">
     {% comment %} <a class="navbar-brand" href="#">Navbar</a> {% endcomment %}
@@ -11,37 +50,48 @@
           <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{% url 'about' %}">About</a>
+          <a class="nav-link active" href="{% url 'place' %}">Places</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'contact' %}">Contact</a>
         </li>
         
+       
+        {% if request.user.is_superuser %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-            Dropdown link
+            Manage Tours
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{% url 'tour' %}">Careate tour</a></li>
+            {% comment %} <li><a class="dropdown-item" href="#">booed tour</a></li> {% endcomment %}
+            <li><a class="dropdown-item" href="{% url 'allbooklist' %}">View booking lis</a></li>
           </ul>
         </li>
-        
-      {% comment %} if super uesr enter than show fdata in feedback table {% endcomment %}
+        {% endif %} 
+      
       {% if request.user.is_superuser %}
       <li class="nav-item">
         <a class="nav-link active" href="{% url 'feedback' %}">feedback</a>
       </li>
-      <li class="nav-item">
+      {% comment %} <li class="nav-item">
         <a class="nav-link active" href="{% url 'tour' %}">Careate tour</a>
-      </li>
-      {% endif %}
-      {% if request.user.is_superuser %}
+      </li> {% endcomment %}
+      {% endif %}  
+
+
+{% if user.is_authenticated and not user.is_staff %}
+  <li class="nav-item">
+    <a class="nav-link active" href="{% url 'cbook' %}">Booked tour</a>
+  </li>
+{% endif %}
+
+
+      {% comment %} {% if request.user.is_superuser %}
       <li class="nav-item">
         <a class="nav-link active" href="{% url 'allbooklist' %}">View all booking list</a>
       </li>
-      {% endif %}
+      {% endif %} {% endcomment %}
       {% if request.user.is_authenticated %}
       <div class="d-flex align-items-center">
           <span class="welcome-text">Welcome, {{ user.username }}</span>

@@ -59,42 +59,10 @@
     }
     img {
         display: block;
-        margin: 0 auto;
     }
   </style>
 </head>
 <body>
-    {% comment %} <div class="container">
-        <div class="form-container">
-          <h1>Add New Tour</h1>
-          <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <label for="image" class="form-label">Image</label>
-                <input class="form-control" type="file" id="image" name="image" required>
-              </div>
-      
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title" name="title" placeholder="Enter tour title" required>
-            </div>
-    
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter tour description" required></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-custom w-100">Save Tour</button>
-          </form>
-
-          <div class="text-center mt-3">
-            <a href="{% url 'viewtour' %}">view over all tour</a>
-          </div>
-
-        </div>  
-      </div> {% endcomment %}
-
       <div class="container">
         <div class="form-container">
             <h1>{% if tour %}Update Tour{% else %}Add New Tour{% endif %}</h1>
