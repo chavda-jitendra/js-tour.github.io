@@ -9,65 +9,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django Site{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/place.css">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 </head>
 <body>       
+   
+  <div class="responsive-container-block bigContainer">
+    <div class="responsive-container-block Container">
+      <img class="mainImg" src="\static\img\somnath.jpg">
+      <div class="allText aboveText">
+        <p class="text-blk headingText">
+          Somnath
+        </p>
+  
+        <p class="text-blk description" >
+          The Somnath Temple, located in Gujarat, India, is one of the twelve Jyotirlingas of Lord Shiva and holds immense religious significance. 
+          It is believed to have been originally built by the Moon God, Chandra, and has been destroyed and rebuilt multiple times throughout history. 
+          The present structure was reconstructed in 1951 under the leadership of Sardar Vallabhbhai Patel. 
+           It is a major pilgrimage site and attracts thousands of devotees every year.
+        </p>
+        <button class="explore">
+          <a href="{% url 'homepage' %}" style="text-decoration: none; color: white;">explore</a>
+        </button>
+        </div>
+    </div>
+    <div class="responsive-container-block Container bottomContainer">
+      <img class="mainImg" src="\static\img\surya.jpg">
+      <div class="allText bottomText">
+        <p class="text-blk headingText">
+          Sun Temple
+        </p>
     
-    <div class="responsive-container-block bigContainer">
-        <div class="responsive-container-block Container">
-          <img class="mainImg" src="\static\img\somnath.jpg">
-          <div class="allText aboveText">
-            <p class="text-blk headingText">
-              Our Mission
-            </p>
-            {% comment %} <p class="text-blk subHeadingText">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p> {% endcomment %}
-            <p class="text-blk description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum pulvinar ullamcorper suspendisse ac eget. Pellentesque tempus leo in ullamcorper quis vestibulum ligula elementum ut.
-            </p>
-            <button class="explore">
-              Explore
-            </button>
+        <p class="text-blk description">
+          The Sun Temple in Modhera, Gujarat, is a magnificent 11th-century temple dedicated to the Sun God,
+           Surya. Built by King Bhima I of the Chalukya dynasty in 1026 AD, 
+           it is an architectural masterpiece known for its intricate carvings and grand design. 
+           The temple complex includes the main shrine (Garbhagriha), an assembly hall (Sabha Mandap), 
+           and a sacred stepwell (Surya Kund) with over 100 small shrines. 
+           
+        </p>
+        <button class="explore">
+          <a href="{% url 'homepage' %}" style="text-decoration: none; color: white;">explore</a>
+        </button>
           </div>
-        </div>
-        <div class="responsive-container-block Container bottomContainer">
-          <img class="mainImg" src="\static\img\surya.jpg">
-          <div class="allText bottomText">
-            <p class="text-blk headingText">
-              Our Vision
-            </p>
-            {% comment %} <p class="text-blk subHeadingText">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p> {% endcomment %}
-            <p class="text-blk description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum pulvinar ullamcorper suspendisse ac eget. Pellentesque tempus leo in ullamcorper quis vestibulum ligula elementum ut.
-            </p>
-            <button class="explore">
-              Book Now
-            </button>
-          </div>
-        </div>
+    </div>
 
-        <div class="responsive-container-block Container">
-            <img class="mainImg" src="\static\img\gir national park.jpg">
-            <div class="allText aboveText">
-              <p class="text-blk headingText">
-                Our Mission
-              </p>
-              {% comment %} <p class="text-blk subHeadingText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p> {% endcomment %}
-              <p class="text-blk description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum pulvinar ullamcorper suspendisse ac eget. Pellentesque tempus leo in ullamcorper quis vestibulum ligula elementum ut.
-              </p>
-              <button class="explore">
-                Explore
-              </button>
-            </div>
-          </div>
+    <div class="responsive-container-block Container">
+        <img class="mainImg" src="\static\img\gir national park.jpg">
+        <div class="allText aboveText">
+          <p class="text-blk headingText">
+            Gir National Park
+          </p>
+         
+          <p class="text-blk description">
+            Gir National Park, located in Gujarat, India, is the only home of the Asiatic lions.
+             Established in 1965, it covers around 1,412 square kilometers of dry deciduous forests, 
+             grasslands, and rocky hills. The park is rich in biodiversity, housing leopards, hyenas, 
+            sambar deer, and over 300 bird species. The best time to visit is from December to March,
+             with jeep safaris offering wildlife sightings. Conservation efforts have helped increase 
+             the lion population significantly.
+          </p>
+          <button class="explore">
+            <a href="{% url 'homepage' %}" style="text-decoration: none; color: white;">explore</a>
+          </button>
+           </div>
       </div>
+  </div>
 
 
     

@@ -7,16 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Home{% endblock %}</title>
     
-   
-    
     <link rel="stylesheet" href="/static/css/nav.css">
-
-    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> {% endcomment %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     <style>
- <style>
     .tour-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -72,9 +67,7 @@
       font-family: Arial, sans-serif;
       color: #572c0f;
   }
-
-
-    </style>
+  </style>
 </head>
 <body>
   {% csrf_token %}
@@ -149,7 +142,7 @@
         </button>
     </div>
 
-    <div class="container mt-5">
+    {% comment %} <div class="container mt-5">
       <hr>
       <h1 class="text-center mb-4">ALL TOURS</h1>
       <hr>
@@ -177,7 +170,6 @@
                     {% endif %}
                   }
                 </script>
-                {% comment %} <a href="{% url 'book' %}" class="btn btn-warning text-lg-center fw-bold text-dark">Book Now</a> {% endcomment %}
                 <a href="#" class="btn btn-warning text-lg-center float-end fw-bold text-dark">Detail here...</a>
               </div>
             </div>
@@ -186,7 +178,74 @@
           <p>No tours available.</p>
         {% endfor %}
       </div>
-    </div>
+    </div> {% endcomment %}
+
+    <div class="container mt-5">
+      <hr>
+      <h1 class="text-center mb-4">ALL TOURS</h1>
+      <hr>
+  
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          {% for tour in tours %}
+          <div class="col">
+              <div class="card h-100">
+                  <img src="{{ tour.image.url }}" class="card-img-top" alt="{{ tour.title }}">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ tour.title }}</h5>
+      
+                      <!-- Description with truncation -->
+                      <p class="card-text description" id="desc-{{ forloop.counter }}">
+                          <span id="short-{{ forloop.counter }}">
+                              {{ tour.description|slice:":100" }}...
+                          </span>
+                          <span id="full-{{ forloop.counter }}" style="display: none;">
+                              {{ tour.description }}
+                          </span>
+                          <span id="toggle-{{ forloop.counter }}" class="text-primary" style="cursor: pointer;"
+                              onclick="toggleDescription({{ forloop.counter }})"> More</span>
+                      </p>
+      
+                      <!-- Booking Button -->
+                      <a href="{% if user.is_authenticated %}{% url 'book' %}?title={{ tour.title }}{% else %}{% url 'login' %}{% endif %}"
+                          class="btn btn-warning fw-bold text-dark">
+                          Book Now
+                      </a>
+      
+                      <!-- Detail Page -->
+                      <a href="{% url 'place' %}" class="btn btn-warning text-lg-center float-end fw-bold text-dark">Detail here...</a>
+                  </div>
+              </div>
+          </div>
+    {% empty %}
+    <p>No tours available.</p>
+    {% endfor %}
+ </div>
+</div>
+
+
+<script>
+  function toggleDescription(counter) {
+    var shortText = document.getElementById("short-" + counter);
+    var fullText = document.getElementById("full-" + counter);
+    var toggleButton = document.getElementById("toggle-" + counter);
+
+    if (fullText.style.display === "none") {
+        // Show full text, hide short text
+        shortText.style.display = "none";
+        fullText.style.display = "inline";
+        toggleButton.textContent = " Less"; // Change to "Less"
+    } else {
+        // Show short text, hide full text
+        shortText.style.display = "inline";
+        fullText.style.display = "none";
+        toggleButton.textContent = " More"; // Change to "More"
+    }
+}
+</script>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 

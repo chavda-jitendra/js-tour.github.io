@@ -45,21 +45,44 @@ def place(request):
 
 
 
+# def contact(request):
+#     if request.method == "POST":
+#         email = request.POST.get('email')
+#         description = request.POST.get('description')
+
+#          # Ensure both fields are filled out
+#         if email and description:
+#             contact = Feedback(email=email, description=description)
+#             contact.save()
+#             messages.success(request, "data send successfully")
+#         else:
+#             return HttpResponse("Error: Please fill out all fields.")
+
+#     # Render the HTML form when method is GET
+#     return render(request, 'contact.html')
+
 def contact(request):
     if request.method == "POST":
         email = request.POST.get('email')
-        description = request.POST.get('des')
+        description = request.POST.get('description')  # Fixed field name
 
-         # Ensure both fields are filled out
         if email and description:
-            contact = Feedback(email=email, description=description)
-            contact.save()
-            messages.success(request, "data send successfully")
-        else:
-            return HttpResponse("Error: Please fill out all fields.")
+            if Feedback.objects.filter(email=email).exists():
+                messages.error(request, "This email has already been used!")
+                return redirect('contact')  # Redirect to prevent duplicate form submission
 
-    # Render the HTML form when method is GET
+            Feedback.objects.create(email=email, description=description)
+            messages.success(request, "Data sent successfully!")
+            return redirect('contact')  # Redirect to clear the form
+
+        else:
+            messages.error(request, "Please fill out all fields.")
+            return redirect('contact')
+
     return render(request, 'contact.html')
+
+
+
 
 def login(request):
     if request.method == 'POST':

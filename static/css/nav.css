@@ -48,7 +48,7 @@
     border-radius: 20px;
     overflow: hidden;
     background-color: #ffffff;
-   box-shadow: 5px 5px 20px 10px rgba(162, 51, 226, 0.2);
+    box-shadow: 5px 5px 20px 10px rgba(162, 51, 226, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 2%;
     margin-bottom: 2%;
